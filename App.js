@@ -1,19 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native';
+// import Task from './components/Task'
+import background from './images/bg-desktop-light.jpg';
+import { colors } from './config/theme';
+
 import Task from './components/Task'
+import WriteTask from './components/WriteTask'
+
 
 export default function App() {
 
-  const [task, setTask] = useState();
+  const theme = {mode: "dark"};
+  let activeColors = colors[theme.mode];
 
   const [taskItems, setTaskItems] = useState([]);
-
-  const handleAddTask = () => {
-    Keyboard.dismiss();
-    setTaskItems([...taskItems,task]);
-    setTask(null);
-  }
 
   const completTask = (index) => {
     let itemsCopy = [...taskItems];
@@ -25,8 +26,13 @@ export default function App() {
     <View style={styles.container}>
         {/* Today's Tasks*/}
         <View style={styles.tasksWrapper}>
+          
+          {/* <ImageBackground source={background} resizeMode="cover" style={styles.image}> */}
+            <Text style={styles.sectionTitle}>Today's tasks</Text>
+          {/* </ImageBackground> */}
 
-          <Text style={styles.sectionTitle}>Today's tasks</Text>
+          {/* <Text style={styles.sectionTitle}>Today's tasks</Text> */}
+
 
           <View style={styles.item}>
             {/* This is where the tasks will go */}
@@ -45,19 +51,7 @@ export default function App() {
         </View>
 
         {/* Write a tasks */}
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height" }
-          style={styles.writeTaskWrapper}
-        >
-          <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)}/>
-        
-          <TouchableOpacity onPress={() => handleAddTask()}>
-            <View style={styles.addWrapper}>
-              <Text style={styles.addText}>+</Text>
-            </View>
-          </TouchableOpacity>
-
-        </KeyboardAvoidingView>
+        <WriteTask taskItems={taskItems} setTaskItems={setTaskItems} />
 
     </View>
   );
@@ -69,6 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E8EAED',
   },
+  text: {},
   tasksWrapper: {
     paddingTop: 80,
     paddingHorizontal: 20,
@@ -82,33 +77,4 @@ const styles = StyleSheet.create({
     marginTop: 30,
     
   },
-  writeTaskWrapper: {
-    position: 'absolute',
-    bottom: 60,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  input: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 60,
-    backgroundColor: '#FFF',
-    borderColor: '#C0C0C0',
-    borderWidth: 1,
-    width: 250,
-
-  },
-  addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#FFF',
-    borderRadius: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#C0C0C0',
-    borderWidth: 1,
-  },
-  addText: { },
 });
