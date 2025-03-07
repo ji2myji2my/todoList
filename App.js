@@ -7,6 +7,7 @@ import { colors } from './config/theme';
 
 import Task from './components/Task'
 import WriteTask from './components/WriteTask'
+import Wrapper from './components/Wrapper'
 
 
 export default function App() {
@@ -15,12 +16,6 @@ export default function App() {
   let activeColors = colors[theme.mode];
 
   const [taskItems, setTaskItems] = useState([]);
-
-  const completTask = (index) => {
-    let itemsCopy = [...taskItems];
-    itemsCopy.splice(index, 1);
-    setTaskItems(itemsCopy);
-  }
 
   return (
     <View style={styles.container}>
@@ -31,35 +26,9 @@ export default function App() {
           <TouchableOpacity style={styles.modeHandlebtn} >*</TouchableOpacity>
         </View>
 
-        {/* Write a tasks */}
         <WriteTask taskItems={taskItems} setTaskItems={setTaskItems} />
 
-
-        <View style={styles.tasksWrapper}>
-
-          {/* <ImageBackground source={background} resizeMode="cover" style={styles.image}> */}
-          {/* </ImageBackground> */}
-
-          {/* <Text style={styles.sectionTitle}>Today's tasks</Text> */}
-
-
-          <View style={styles.item}>
-            {/* This is where the tasks will go */}
-            {
-              taskItems.map((item, index) => {
-                return (
-                  <TouchableOpacity  key= {index} onPress={() => completTask(index)}>
-                    <Task text={item}/>
-                  </TouchableOpacity>
-                ) 
-                
-              })
-            }
-          </View>
-        
-        </View>
-
-
+        <Wrapper taskItems={taskItems} setTaskItems={setTaskItems}/>
 
     </View>
   );
@@ -77,10 +46,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'space-around',
-  }, 
-  sectionTitle: {
+  },
 
-  },   
   modeHandlebtn: {
     width: 60,
     height: 60,
@@ -94,23 +61,9 @@ const styles = StyleSheet.create({
 
   text: {},
 
-  tasksWrapper: {
-    backgroundColor : "#2e4054",
-    width: '90%',
-    marginInline: 'auto',
-    marginTop: 20,
-    borderRadius: 5,
-    paddingHorizontal: 20,
-
-  },
-
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
   },
 
-  item: {
-    marginTop: 30,
-    
-  },
 });

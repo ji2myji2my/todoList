@@ -1,11 +1,6 @@
 import React, {useState} from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native';
 
-// import Task from './components/Task'
-
-
-
-
 const WriteTask = ({ taskItems, setTaskItems }) => {
 
     const [task, setTask] = useState("");
@@ -19,7 +14,7 @@ const WriteTask = ({ taskItems, setTaskItems }) => {
     return (
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height" }
-          style={styles.writeTaskWrapper}
+          style={styles.keyboardAvoidingView}
         >
 
           <TextInput style={styles.input} placeholder={'Currently Typing'} value={task} onChangeText={text => setTask(text)}/>
@@ -36,7 +31,7 @@ const WriteTask = ({ taskItems, setTaskItems }) => {
 
 const styles = StyleSheet.create({
 
-    writeTaskWrapper: {
+    keyboardAvoidingView: {
         backgroundColor : "#2e4054",
         marginInline: 'auto',
         position: 'relative',
@@ -48,6 +43,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderRadius: 5,
       },
+
       input: {
         paddingVertical: 15,
         paddingHorizontal: 15,
@@ -58,6 +54,7 @@ const styles = StyleSheet.create({
         width: 250,
     
       },
+      
       addWrapper: {
         width: 60,
         height: 60,
@@ -68,6 +65,7 @@ const styles = StyleSheet.create({
         borderColor: '#C0C0C0',
         borderWidth: 1,
       },
+
       addText: { },
 
 });
