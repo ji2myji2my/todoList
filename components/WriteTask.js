@@ -22,7 +22,7 @@ const WriteTask = ({ taskItems, setTaskItems }) => {
           style={styles.writeTaskWrapper}
         >
 
-          <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)}/>
+          <TextInput style={styles.input} placeholder={'Currently Typing'} value={task} onChangeText={text => setTask(text)}/>
           <TouchableOpacity onPress={() => handleAddTask()}>
             <View style={styles.addWrapper}>
               <Text style={styles.addText}>+</Text>
@@ -37,12 +37,16 @@ const WriteTask = ({ taskItems, setTaskItems }) => {
 const styles = StyleSheet.create({
 
     writeTaskWrapper: {
-        position: 'absolute',
-        bottom: 60,
-        width: '100%',
+        backgroundColor : "#2e4054",
+        marginInline: 'auto',
+        position: 'relative',
+        top: 10,
+        width: '90%',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        zIndex: 1,
+        borderRadius: 5,
       },
       input: {
         paddingVertical: 15,

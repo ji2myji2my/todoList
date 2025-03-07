@@ -25,10 +25,19 @@ export default function App() {
   return (
     <View style={styles.container}>
         {/* Today's Tasks*/}
+
+        <View style={styles.viewTitle}>
+          <Text style={styles.sectionTitle}>Today's tasks</Text>
+          <TouchableOpacity style={styles.modeHandlebtn} >*</TouchableOpacity>
+        </View>
+
+        {/* Write a tasks */}
+        <WriteTask taskItems={taskItems} setTaskItems={setTaskItems} />
+
+
         <View style={styles.tasksWrapper}>
-          
+
           {/* <ImageBackground source={background} resizeMode="cover" style={styles.image}> */}
-            <Text style={styles.sectionTitle}>Today's tasks</Text>
           {/* </ImageBackground> */}
 
           {/* <Text style={styles.sectionTitle}>Today's tasks</Text> */}
@@ -50,8 +59,7 @@ export default function App() {
         
         </View>
 
-        {/* Write a tasks */}
-        <WriteTask taskItems={taskItems} setTaskItems={setTaskItems} />
+
 
     </View>
   );
@@ -63,16 +71,44 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E8EAED',
   },
+
+  viewTitle: {
+    display: 'flex',
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  }, 
+  sectionTitle: {
+
+  },   
+  modeHandlebtn: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#FFF',
+    borderRadius: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#C0C0C0',
+    borderWidth: 1,
+  },
+
   text: {},
+
   tasksWrapper: {
-    paddingTop: 80,
+    backgroundColor : "#2e4054",
+    width: '90%',
+    marginInline: 'auto',
+    marginTop: 20,
+    borderRadius: 5,
     paddingHorizontal: 20,
 
   },
+
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
   },
+
   item: {
     marginTop: 30,
     
