@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import Task from './Task'
 
 
 
-const Wrapper = ({ taskItems, setTaskItems }) => {
+const ListWrapper = ({ taskItems, setTaskItems }) => {
+
+    const [completed, setCompleted] = useState(false);
     
     const completTask = (index) => {
       let itemsCopy = [...taskItems];
@@ -22,7 +24,7 @@ const Wrapper = ({ taskItems, setTaskItems }) => {
                           taskItems.map((item, index) => {
                               return (
                                   <TouchableOpacity  key= {index} onPress={() => completTask(index)}>
-                              <Task text={item}/>
+                              <Task text={item} completed={completed} setCompleted={setCompleted}/>
                             </TouchableOpacity>
                           ) 
 
@@ -33,7 +35,7 @@ const Wrapper = ({ taskItems, setTaskItems }) => {
             </View>
       </View>
     )
-    
+
 }
 
 
@@ -43,6 +45,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        zIndex: 1,
       },
 
       box: {
@@ -54,8 +57,7 @@ const styles = StyleSheet.create({
       },
 
       item: {
-        marginTop: 30,
-        
+        // marginTop: 10,
       },
 
       scrollContent: {
@@ -69,4 +71,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Wrapper;
+export default ListWrapper;

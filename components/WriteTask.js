@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         backgroundColor : "#2e4054",
         marginInline: 'auto',
         position: 'relative',
-        top: 10,
+        top: 30,
         width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         width: 250,
     
       },
-      
+
       addWrapper: {
         width: 60,
         height: 60,
