@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+// custom component
 import Task from './Task'
+import Draggable from './Draggable'
 
 
 
@@ -9,31 +12,35 @@ const ListWrapper = ({ taskItems, setTaskItems }) => {
 
     const [completed, setCompleted] = useState(false);
     
-    const completTask = (index) => {
-      let itemsCopy = [...taskItems];
-      itemsCopy.splice(index, 1);
-      setTaskItems(itemsCopy);
-    }
-
     return (
-        <View style={styles.container}>
-            <View style={styles.box}>
-                <ScrollView contentContainerStyle={styles.scrollContent}>
-                    <View style={styles.item}>
-                      {
-                          taskItems.map((item, index) => {
-                              return (
-                                  <TouchableOpacity  key= {index} onPress={() => completTask(index)}>
-                              <Task text={item} completed={completed} setCompleted={setCompleted}/>
+        <GestureHandlerRootView style={styles.container}>
+          <View style={styles.box}>
+              <ScrollView contentContainerStyle={styles.scrollContent}>
+                  <View style={styles.item}>
+                    {
+                      taskItems.map((item, index) => {
+                        return (
+                          <Draggable key={item}>
+                            {/* <TouchableOpacity  key= {index} onPress={() => completTask(index)}> */}
+                            <TouchableOpacity  key= {index}>
+                              <Task 
+                                text={item} 
+                                completed={completed} 
+                                setCompleted={setCompleted}
+                                taskItems={taskItems}
+                                setTaskItems={setTaskItems}
+                                index={index}
+                              />
                             </TouchableOpacity>
-                          ) 
-
-                        })
+                          </Draggable>
+                        ) 
+                        
+                      })
                     }
-                    </View>
-                </ScrollView>
-            </View>
-      </View>
+                  </View>
+              </ScrollView>
+          </View>
+        </GestureHandlerRootView>
     )
 
 }

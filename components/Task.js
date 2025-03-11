@@ -10,20 +10,30 @@ const Task = (props) => {
     props.setCompleted(!props.completed);
   };
 
+  const deleteTask = (index) => {
+    let itemsCopy = [...props.taskItems];
+    itemsCopy.splice(index, 1);
+    props.setTaskItems(itemsCopy);
+  }
+
   return (
     <View style={styles.item}>
+
       <View style={styles.itemLeft}>
-        <View style={styles.square} />
-        {/* On applique le style de texte barré si completed = true */}
+
+        <TouchableOpacity onPress={handleToggleComplete}>
+          <View style={styles.circular} />
+        </TouchableOpacity>
+        
         <Text style={[styles.itemText, props.completed && styles.itemTextCompleted]}>
           {props.text}
         </Text>
+
       </View>
       
-      {/* Rendre le bouton "circular" cliquable */}
-      <TouchableOpacity onPress={handleToggleComplete}>
-        <View style={styles.circular} />
-      </TouchableOpacity>
+      <TouchableOpacity  style={styles.square} key= {props.index} onPress={() => deleteTask(props.index)}/>
+      
+      {/* <View style={styles.square} /> */}
     </View>
   );
 };
@@ -60,12 +70,14 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
     opacity: 0.6, // Optionnel, pour un effet visuel plus marqué
   },
+
   circular: {
     width: 24,
     height: 24,
     borderColor: "#55BCF6",
     borderWidth: 2,
     borderRadius: 12,
+    marginEnd: 10,
   },
 });
 
