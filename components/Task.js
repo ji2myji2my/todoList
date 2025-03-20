@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Task = (props) => {
   // État local pour savoir si la tâche est complétée ou non
-  // const [completed, setCompleted] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   // Bascule la valeur completed
   const handleToggleComplete = () => {
-    props.setCompleted(!props.completed);
+    setCompleted(!completed);
   };
 
   const deleteTask = (index) => {
@@ -25,13 +25,16 @@ const Task = (props) => {
           <View style={styles.circular} />
         </TouchableOpacity>
         
-        <Text style={[styles.itemText, props.completed && styles.itemTextCompleted]}>
+        <Text style={[styles.itemText, completed && styles.itemTextCompleted]}>
           {props.text}
         </Text>
 
       </View>
       
-      <TouchableOpacity  style={styles.square} key= {props.index} onPress={() => deleteTask(props.index)}/>
+      <TouchableOpacity
+        style={styles.square} key={props.index} 
+        onPress={() => deleteTask(props.index)}
+      />
       
       {/* <View style={styles.square} /> */}
     </View>
@@ -40,6 +43,7 @@ const Task = (props) => {
 
 const styles = StyleSheet.create({
   item: {
+    height: 80,
     backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,

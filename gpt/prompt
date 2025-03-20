@@ -1,0 +1,327 @@
+App. js "import { StatusBar } from 'expo-status-bar';
+import React, {useState} from 'react';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native';
+
+
+// Custom COmponent
+import WriteTask from './components/WriteTask'
+import ListWrapper from './components/ListWrapper'
+import LightDarkBar from './components/LightDarkBar'
+
+
+export default function App() {
+
+  // const theme = {mode: "dark"};
+  // let activeColors = colors[theme.mode];
+
+  const [taskItems, setTaskItems] = useState([]);
+
+  return (
+    <View style={styles.container}>
+   
+        <LightDarkBar />
+
+        <WriteTask taskItems={taskItems} setTaskItems={setTaskItems} />
+
+        <ListWrapper taskItems={taskItems} setTaskItems={setTaskItems} />
+
+    </View>
+  );
+
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#E8EAED',
+  },
+
+});
+"
+
+ListWrapper.js : "import React, { useState } from "react";
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+// custom component
+import Task from './Task'
+import Draggable from './Draggable'
+import { useSharedValue } from "react-native-reanimated";
+
+
+
+const ListWrapper = ({ taskItems, setTaskItems }) => {
+
+    const [completed, setCompleted] = useState(false);
+
+    const positions = useSharedValue(
+        Object.assign({}, ...taskItems.map((item, index) => ({ [index]: index })))
+    );
+    
+    return (
+        <GestureHandlerRootView style={styles.container}>
+          <View style={styles.box}>
+              <ScrollView contentContainerStyle={styles.scrollContent}>
+                  <View style={styles.item}>
+                    {
+                      taskItems.map((item, index) => {
+                        return (
+                          <Draggable key={item} positions={positions} id={index}>
+                            <TouchableOpacity  key= {index}>
+                              <Task 
+                                text={item} 
+                                completed={completed} 
+                                setCompleted={setCompleted}
+                                taskItems={taskItems}
+                                setTaskItems={setTaskItems}
+                                index={index}
+                              />
+                            </TouchableOpacity>
+                          </Draggable>
+                        ) 
+                      })
+                    }
+                  </View>
+              </ScrollView>
+          </View>
+        </GestureHandlerRootView>
+    )
+
+}
+
+
+const styles = StyleSheet.create({
+
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1,
+      },
+
+      box: {
+        width: "90%",
+        height: "75%",
+        backgroundColor: "#2e4054",
+        borderRadius: 8,
+        padding: 16,
+      },
+
+      item: {
+        // marginTop: 10,
+      },
+
+      scrollContent: {
+        flexGrow: 1,
+      },
+
+      item: {
+        color: "#fff",
+        marginVertical: 8,
+      },
+
+});
+
+export default ListWrapper;"
+
+Draggable.js : "
+
+import React from 'react';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import Animated, {
+  useSharedValue,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useAnimatedReaction,
+  withTiming
+} from 'react-native-reanimated';
+import { View } from 'react-native';
+
+import { MARGIN, getPosition, getOrder } from './utils/utils'
+
+const Draggable = ({ children, positions, id }) => {
+
+  const position = getPosition(id);
+  console.log("position: ", position );
+  const translateY = useSharedValue(position.y);
+  const startY = useSharedValue(id);
+  console.log('startY: ', startY.value);
+
+  const isGestureActive = useSharedValue(false);
+
+
+  useAnimatedReaction(() => id, newOrder => {
+    const newPositions = getPosition(newOrder);
+    translateY.value = withTiming(newPositions.y);
+  })
+
+
+  const panGesture = useAnimatedGestureHandler({
+    onStart: () => {
+      // Store the initial positions in ctx
+      startY.value = translateY.value;
+      isGestureActive.value = true;
+      console.log('onBegin');
+    },
+    onActive: (evt) => {
+      // Use ctx.startX and ctx.startY here
+      translateY.value = startY.value + evt.translationY;
+
+      const  oldOrder = id;
+      console.log('oldOrder: ', oldOrder);
+      const newOrder = getOrder(translateY.value);
+      console.log('newOrder: ', newOrder);
+      if (oldOrder !== newOrder) {
+        const newPositions = JSON.parse(JSON.stringify(id));
+        newPositions[id] = newOrder;
+        newPositions[oldOrder] = oldOrder;
+        positions.value = newPositions;
+      }
+    },
+    onFinish: () => {
+      isGestureActive.value = false;
+    },
+  });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    const zIndex = isGestureActive.value ? 1000 : 1;
+    const scale = isGestureActive.value ? 1.1 : 1;
+    return {
+      position: 'absolute',
+      zIndex,
+      // margin : MARGIN * 2,
+      transform: [
+        // { translateX: translateX.value },
+        { translateY: translateY.value },
+        { scale },
+      ],
+    };
+  });
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <PanGestureHandler onGestureEvent={panGesture} draggable={false}>
+        <Animated.View>{children}</Animated.View>
+      </PanGestureHandler>
+    </Animated.View>
+  );
+};
+
+export default Draggable;"
+
+Task.js : "import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+
+const Task = (props) => {
+  // État local pour savoir si la tâche est complétée ou non
+  // const [completed, setCompleted] = useState(false);
+
+  // Bascule la valeur completed
+  const handleToggleComplete = () => {
+    props.setCompleted(!props.completed);
+  };
+
+  const deleteTask = (index) => {
+    let itemsCopy = [...props.taskItems];
+    itemsCopy.splice(index, 1);
+    props.setTaskItems(itemsCopy);
+  }
+
+  return (
+    <View style={styles.item}>
+
+      <View style={styles.itemLeft}>
+
+        <TouchableOpacity onPress={handleToggleComplete}>
+          <View style={styles.circular} />
+        </TouchableOpacity>
+        
+        <Text style={[styles.itemText, props.completed && styles.itemTextCompleted]}>
+          {props.text}
+        </Text>
+
+      </View>
+      
+      <TouchableOpacity  style={styles.square} key= {props.index} onPress={() => deleteTask(props.index)}/>
+      
+      {/* <View style={styles.square} /> */}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  item: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
+    zIndex: 2,
+  },
+  itemLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  square: {
+    width: 24,
+    height: 24,
+    backgroundColor: "blue",
+    opacity: 0.4,
+    borderRadius: 5,
+    marginRight: 15,
+  },
+  itemText: {
+    maxWidth: "80%",
+  },
+  // Style qu'on applique conditionnellement quand la tâche est complétée
+  itemTextCompleted: {
+    textDecorationLine: "line-through",
+    opacity: 0.6, // Optionnel, pour un effet visuel plus marqué
+  },
+
+  circular: {
+    width: 24,
+    height: 24,
+    borderColor: "#55BCF6",
+    borderWidth: 2,
+    borderRadius: 12,
+    marginEnd: 10,
+  },
+});
+
+export default Task;
+"
+
+utils.js "import { Dimensions } from "react-native";
+
+const COL = 15;
+export const MARGIN = 8;
+export const SIZE = Dimensions.get('window').width / COL - MARGIN;
+
+export const getPosition = (index) => {
+    "worklet";
+    return {
+        y: (index % COL) * SIZE,
+        x: Math.floor(index / COL) * SIZE,
+        // y: Math.floor(index / COL),
+    }
+}
+
+export const getOrder = ( y ) => {
+    'worklet';
+    const row = Math.round(y / SIZE);
+    // const col = Math.round(x / SIZE);
+    return (row * COL) / 15;
+  };"
+
+Hello mon objectif est de realiser une feature drag and drop element de task pour reorder les reorder.
+Actuellement je rencontre quelque probleme :
+- lorsque je selectionne une task dans le rendu visuelle internet l'element perd sa position de depart et 
+se place en 0 sur l'axe Y "stratY" pourquoi ?
+- Ensuite dans dans utils.js "const COL = 15;" est fixe mais j'aimerai le rendre soit dynamique en fonction du nombre de task ecrite
+soit prendre les dimention de ListWrapper et non la window 
+- Aide moi a reecrire getPosition et getOrder stp 
+
