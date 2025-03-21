@@ -1,6 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native';
+import { 
+  Keyboard, 
+  KeyboardAvoidingView, 
+  Platform, StyleSheet, 
+  Text, TextInput, 
+  TouchableOpacity, 
+  View, 
+  ImageBackground } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
 // Custom COmponent
@@ -16,16 +26,30 @@ export default function App() {
 
   const [taskItems, setTaskItems] = useState([]);
 
+  // Si on est sur web => Wrap DndProvider
+  if (Platform.OS === 'web') {
+    return (
+      <DndProvider backend={HTML5Backend}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <View style={{ flex: 1, backgroundColor: '#E8EAED' }}>
+            <LightDarkBar />
+            <WriteTask taskItems={taskItems} setTaskItems={setTaskItems} />
+            <ListWrapper taskItems={taskItems} setTaskItems={setTaskItems} />
+          </View>
+        </GestureHandlerRootView>
+      </DndProvider>
+    );
+  }
+
+  // Sinon (iOS/Android) => pas besoin de DndProvider
   return (
-    <View style={styles.container}>
-   
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#E8EAED' }}>
         <LightDarkBar />
-
         <WriteTask taskItems={taskItems} setTaskItems={setTaskItems} />
-
-        <ListWrapper taskItems={taskItems} setTaskItems={setTaskItems}/>
-
-    </View>
+        <ListWrapper taskItems={taskItems} setTaskItems={setTaskItems} />
+      </View>
+    </GestureHandlerRootView>
   );
 
 }
