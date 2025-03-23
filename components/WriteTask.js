@@ -1,15 +1,25 @@
 import React, {useState} from 'react';
 import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground } from 'react-native';
 
-const WriteTask = ({ taskItems, setTaskItems }) => {
+const WriteTask = ({ onAddTask }) => {
 
-    const [task, setTask] = useState("");
-
-    const handleAddTask = () => {
-      Keyboard.dismiss();
-      setTaskItems([...taskItems,task]);
-      setTask("");
-    }
+  const [text, setText] = useState('');
+  const handlePress = () => {
+    if (text.trim() === '') return;
+    // On informe le parent qu’on a une nouvelle tâche
+    onAddTask(text.trim());
+    // On réinitialise l’input
+    setText('');
+    Keyboard.dismiss();
+  };
+  
+  
+  // const [task, setTask] = useState("");
+    // const handleAddTask = () => {
+    //   Keyboard.dismiss();
+    //   setTaskItems([...taskItems,task]);
+    //   setTask("");
+    // }
 
     return (
         <KeyboardAvoidingView
@@ -17,8 +27,13 @@ const WriteTask = ({ taskItems, setTaskItems }) => {
           style={styles.keyboardAvoidingView}
         >
 
-          <TextInput style={styles.input} placeholder={'Currently Typing'} value={task} onChangeText={text => setTask(text)}/>
-          <TouchableOpacity onPress={() => handleAddTask()}>
+          <TextInput style={styles.input} 
+            placeholder={'Currently Typing'} 
+            value={text} 
+            onChangeText={text => setText(text)}
+          />
+
+          <TouchableOpacity onPress={() => handlePress()}>
             <View style={styles.addWrapper}>
               <Text style={styles.addText}>+</Text>
             </View>

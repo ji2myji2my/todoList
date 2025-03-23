@@ -1,39 +1,39 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const Task = (props) => {
-  // État local pour savoir si la tâche est complétée ou non
-  const [completed, setCompleted] = useState(false);
+const Task = ({ id, text, completed, onToggle, onDelete }) => {
+  // // État local pour savoir si la tâche est complétée ou non
+  // const [completed, setCompleted] = useState(false);
 
-  // Bascule la valeur completed
-  const handleToggleComplete = () => {
-    setCompleted(!completed);
-  };
+  // // Bascule la valeur completed
+  // const handleToggleComplete = () => {
+  //   setCompleted(!completed);
+  // };
 
-  const deleteTask = (index) => {
-    let itemsCopy = [...props.taskItems];
-    itemsCopy.splice(index, 1);
-    props.setTaskItems(itemsCopy);
-  }
+  // const deleteTask = (index) => {
+  //   let itemsCopy = [...props.taskItems];
+  //   itemsCopy.splice(index, 1);
+  //   props.setTaskItems(itemsCopy);
+  // }
 
   return (
     <View style={styles.item}>
 
       <View style={styles.itemLeft}>
 
-        <TouchableOpacity onPress={handleToggleComplete}>
+        <TouchableOpacity onPress={() => onToggle(id)}>
           <View style={styles.circular} />
         </TouchableOpacity>
         
         <Text style={[styles.itemText, completed && styles.itemTextCompleted]}>
-          {props.text}
+          {text}
         </Text>
 
       </View>
       
       <TouchableOpacity
-        style={styles.square} key={props.index} 
-        onPress={() => deleteTask(props.index)}
+        style={styles.square}
+        onPress={() => onDelete(id)}
       />
       
       {/* <View style={styles.square} /> */}
