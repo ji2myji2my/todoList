@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {
   DndContext,
   closestCenter,
@@ -61,16 +62,20 @@ export default function ListWrapperForWeb({
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
-        <View style={styles.container}>
-          {taskItems.map((task) => (
-            <SortableItem
-              key={task.id}
-              task={task}
-              toggleTask={toggleTask}
-              deleteTask={deleteTask}
-            />
-          ))}
-        </View>
+        <SafeAreaProvider>
+          <SafeAreaView style={styles.container} edges={['top']}>
+            <ScrollView style={styles.scrollView}>
+              {taskItems.map((task) => (
+                <SortableItem
+                  key={task.id}
+                  task={task}
+                  toggleTask={toggleTask}
+                  deleteTask={deleteTask}
+                />
+              ))}
+            </ScrollView>
+          </SafeAreaView>
+        </SafeAreaProvider>
       </SortableContext>
     </DndContext>
   );
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
   container: {
     // Sur web, un conteneur
     width: '90%',
-    height: '70%',
+    height: '85%',
     backgroundColor: '#2e4054',
     marginHorizontal: 'auto',
     padding: 10,
