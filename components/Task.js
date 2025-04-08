@@ -2,20 +2,6 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Task = ({ id, text, completed, onToggle, onDelete }) => {
-  // // État local pour savoir si la tâche est complétée ou non
-  // const [completed, setCompleted] = useState(false);
-
-  // // Bascule la valeur completed
-  // const handleToggleComplete = () => {
-  //   setCompleted(!completed);
-  // };
-
-  // const deleteTask = (index) => {
-  //   let itemsCopy = [...props.taskItems];
-  //   itemsCopy.splice(index, 1);
-  //   props.setTaskItems(itemsCopy);
-  // }
-
   return (
     <View style={styles.item}>
 
@@ -35,8 +21,6 @@ const Task = ({ id, text, completed, onToggle, onDelete }) => {
         style={styles.square}
         onPress={() => onDelete(id)}
       />
-      
-      {/* <View style={styles.square} /> */}
     </View>
   );
 };

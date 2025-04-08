@@ -19,6 +19,7 @@ import WriteTask from './components/WriteTask'
 import ListWrapperForWeb from './components/ListWrapperForWeb';
 import ListWrapperForMobile from './components/ListWrapperForMobile';
 import LightDarkBar from './components/LightDarkBar'
+import DisplayNavBar from './components/DisplayNavBar';
 
 
 export default function App() {
@@ -34,6 +35,12 @@ export default function App() {
     };
     // Mettre à jour la liste
     setTaskItems((prevTasks) => [...prevTasks, newTask]);
+  };
+
+  const displayState = {
+    all: () => setTaskItems(taskItems),
+    active: () => setTaskItems(taskItems.filter((task) => !task.completed)),
+    completed: () => setTaskItems(taskItems.filter((task) => task.completed)),   
   };
 
   const toggleTask = (id) => {
@@ -62,6 +69,7 @@ export default function App() {
               toggleTask={toggleTask}
               deleteTask={deleteTask}
             />
+            <DisplayNavBar state={displayState} />
           </View>
         </GestureHandlerRootView>
       </DndProvider>
