@@ -125,14 +125,15 @@ function SortableItem({ task, toggleTask, deleteTask }) {
 
 const styles = StyleSheet.create({
   container: {
-    // Sur web, un conteneur
-    width: '90%',
-    height: '85%',
+    // // Sur web, un conteneur
+    width: '100%',
+    height: '100%',
     backgroundColor: '#2e4054',
-    marginHorizontal: 'auto',
+    // marginHorizontal: 'auto',
     padding: 10,
-    top: 40,
+    top: 30,
     borderRadius: 10,
+    paddingBottom: 60,
   },
   itemContainer: {
     marginBottom: 8,

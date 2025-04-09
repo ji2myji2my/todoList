@@ -14,7 +14,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import {v4 as uuidv4} from 'uuid';
 
 
-// Custom COmponent
+// Custom Component
 import WriteTask from './components/WriteTask'
 import ListWrapperForWeb from './components/ListWrapperForWeb';
 import ListWrapperForMobile from './components/ListWrapperForMobile';
@@ -60,16 +60,16 @@ export default function App() {
     return (
       <DndProvider backend={HTML5Backend}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <View style={{ flex: 1, backgroundColor: '#E8EAED' }}>
             <LightDarkBar />
-            <WriteTask  onAddTask={handleAddTask} />
-            <ListWrapperForWeb
+            <View style={styles.container}>
+            <WriteTask  onAddTask={handleAddTask} style={styles.WriteTaskStyle}/>
+            <ListWrapperForWeb style={styles.ListWrapperForWebStyle}
               taskItems={taskItems}
               setTaskItems={setTaskItems}
               toggleTask={toggleTask}
               deleteTask={deleteTask}
             />
-            <DisplayNavBar state={displayState} />
+            <DisplayNavBar style={styles.DisplayNavBarStyle} state={displayState} />
           </View>
         </GestureHandlerRootView>
       </DndProvider>
@@ -97,7 +97,26 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    // backgroundColor: '#E8EAED',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
+    marginHorizontal: 'auto',
+    marginTop: 20,
+    width: '60vw',
+    // height: '80vh',
+    marginBottom: 60,
   },
-
+  // WriteTaskStyle: {
+  //   height: '10vh',
+  //   width: '90%',
+  // },
+  // ListWrapperForWebStyle : { 
+  //   height: '80vh',
+  //   width: '100%',
+  // },
+  // DisplayNavBarStyle : {
+  //   // height: '8vh',
+  // },
 });

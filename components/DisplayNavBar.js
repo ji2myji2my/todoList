@@ -11,17 +11,19 @@ const DisplayNavBar = ({ state, clearCompletedFn }) => {
                 <Text style={styles.navText}>items left</Text>
             </View>
             {/* <TouchableOpacity onPress={all}> */}
-            <TouchableOpacity >
-                <Text style={styles.navText}>All</Text>
-            </TouchableOpacity>
-            {/* <TouchableOpacity onPress={active}> */}
-            <TouchableOpacity >
-                <Text style={styles.navText}>Active</Text>
-            </TouchableOpacity>
-            {/* <TouchableOpacity onPress={completed}> */}
-            <TouchableOpacity >
-                <Text style={styles.navText}>Completed</Text>
-            </TouchableOpacity>
+            <View   style={styles.buttons}>
+                <TouchableOpacity >
+                    <Text style={styles.navText}>All</Text>
+                </TouchableOpacity>
+                {/* <TouchableOpacity onPress={active}> */}
+                <TouchableOpacity >
+                    <Text style={styles.navText}>Active</Text>
+                </TouchableOpacity>
+                {/* <TouchableOpacity onPress={completed}> */}
+                <TouchableOpacity >
+                    <Text style={styles.navText}>Completed</Text>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity onPress={() => clearCompletedFn()}>
                 <Text style={styles.navText}>Clear Completed</Text>
             </TouchableOpacity>
@@ -33,18 +35,30 @@ const DisplayNavBar = ({ state, clearCompletedFn }) => {
 const styles = StyleSheet.create({
     navBar: {
         flex: 1,
-        width: '90%',
-        // height: '15%',
+        width: '100%',
+        height: '5vh',
         flexDirection: "row",
         justifyContent: "space-around",
+        alignContent: "flex-start",
+        alignItems: "center",
         padding: 10,
         backgroundColor: '#2e4054',
         marginHorizontal: 'auto',
         borderRadius: 10,
+        bottom: 0,
+        position: 'absolute',
+    },
+    buttons: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignContent: "flex-start",
+        alignItems: "center",
+        gap: 30,
     },
     navText: {
         fontSize: 18,
         color: "#FFF",
+        top: 15,
     },
 });
 

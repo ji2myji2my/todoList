@@ -28,7 +28,7 @@ const WriteTask = ({ onAddTask }) => {
         >
 
           <TextInput style={styles.input} 
-            placeholder={'Currently Typing'} 
+            placeholder={'Create a new todo...'} 
             value={text} 
             onChangeText={text => setText(text)}
           />
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
         backgroundColor : "#2e4054",
         marginInline: 'auto',
         position: 'relative',
-        top: 30,
-        width: '90%',
+        top: 0,
+        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
