@@ -24,7 +24,8 @@ import DisplayNavBar from './components/DisplayNavBar';
 
 export default function App() {
   const [taskItems, setTaskItems] = useState([]);
-
+  const [taskItemsCpy, setTaskItemsCpy] = useState([]);
+  
   const handleAddTask = (taskText) => {
     // Créer une tâche avec un ID unique, 
     // le texte saisi, et completed = false
@@ -35,12 +36,34 @@ export default function App() {
     };
     // Mettre à jour la liste
     setTaskItems((prevTasks) => [...prevTasks, newTask]);
+    setTaskItemsCpy((prevTasks) => [...prevTasks, newTask]);
   };
+  
+  // let keyState = {
+    //   value: "all",
+    // };
+    
+    const upDateTaskItems = (key) => {
+      // setTaskItemsCpy(taskItems);
+      setTaskItems(taskItemsCpy);
+      console.log('key =', key);
+      console.log('taksItemsCpy =', taskItemsCpy);
+      console.log('takItems =', taskItems);
 
-  const displayState = {
-    all: () => setTaskItems(taskItems),
-    active: () => setTaskItems(taskItems.filter((task) => !task.completed)),
-    completed: () => setTaskItems(taskItems.filter((task) => task.completed)),   
+      if (key === 'all') {
+        // console.log('takiTems =', taskItems);
+        return (setTaskItems(taskItemsCpy));
+      }
+      if (key === 'active') {
+        // console.log('takiTems =', taskItems)
+        // setTaskItems(taskItemsCpy);
+        return (setTaskItems(taskItems.filter((task) => !task.completed)));
+      }
+      if (key === 'completed') {
+        // console.log('takiTems =', taskItems);
+        // setTaskItemsCpy(taskItems);
+        return  (setTaskItems(taskItems.filter((task) => task.completed)));
+      }
   };
 
   const toggleTask = (id) => {
@@ -49,11 +72,19 @@ export default function App() {
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
+    setTaskItemsCpy((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
 
   const deleteTask = (id) => {
     setTaskItems((prevTasks) => prevTasks.filter((t) => t.id !== id));
+    setTaskItemsCpy((prevTasks) => prevTasks.filter((t) => t.id !== id));
   };
+
+  console.log
 
   // Si on est sur web => Wrap DndProvider
   if (Platform.OS === 'web') {
@@ -69,7 +100,9 @@ export default function App() {
               toggleTask={toggleTask}
               deleteTask={deleteTask}
             />
-            <DisplayNavBar style={styles.DisplayNavBarStyle} state={displayState} />
+            <DisplayNavBar style={styles.DisplayNavBarStyle} 
+              upDateTaskItems={upDateTaskItems} 
+            />
           </View>
         </GestureHandlerRootView>
       </DndProvider>
