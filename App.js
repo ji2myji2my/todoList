@@ -69,7 +69,10 @@ export default function App() {
     setTaskItemsCpy((prevTasks) => prevTasks.filter((t) => t.id !== id));
   };
 
-  console.log
+  const clearCompletedTasks = () => {
+    setTaskItems((prevTasks) => prevTasks.filter((task) => !task.completed));
+    setTaskItemsCpy((prevTasks) => prevTasks.filter((task) => !task.completed));
+  }
 
   // Si on est sur web => Wrap DndProvider
   if (Platform.OS === 'web') {
@@ -82,11 +85,13 @@ export default function App() {
             <ListWrapperForWeb style={styles.ListWrapperForWebStyle}
               taskItems={taskItems}
               setTaskItems={setTaskItems}
+              setTaskItemsCpy={setTaskItemsCpy}
               toggleTask={toggleTask}
               deleteTask={deleteTask}
             />
             <DisplayNavBar style={styles.DisplayNavBarStyle} 
-              upDateTaskItems={upDateTaskItems} 
+              upDateTaskItems={upDateTaskItems}
+              clearCompletedTasks={clearCompletedTasks}
             />
           </View>
         </GestureHandlerRootView>

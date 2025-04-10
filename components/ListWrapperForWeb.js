@@ -32,6 +32,7 @@ import Task from './Task';
 export default function ListWrapperForWeb({
   taskItems,
   setTaskItems,
+  setTaskItemsCpy,
   toggleTask,
   deleteTask,
 }) {
@@ -49,6 +50,7 @@ export default function ListWrapperForWeb({
       const newIndex = taskItems.findIndex((t) => t.id === over.id);
       const newArr = arrayMove(taskItems, oldIndex, newIndex);
       setTaskItems(newArr);
+      setTaskItemsCpy(newArr);
     }
   };
 

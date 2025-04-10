@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSharedValue } from 'react-native-reanimated';
 
+// Custom Component
 import Task from './Task';
 import DraggableForMobile from './DraggableForMobile';
 import { ITEM_HEIGHT } from './utils/utils';

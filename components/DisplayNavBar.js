@@ -1,12 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const DisplayNavBar = ({ upDateTaskItems }) => {
-
-    // const handleStateChange = (newState) => {
-    //     keyState.value = newState;
-    // }
-
+const DisplayNavBar = ({ upDateTaskItems, clearCompletedTasks }) => {
     return (
         <View style={styles.navBar}>
             <View style={styles.itemsLeft}>
@@ -14,29 +9,22 @@ const DisplayNavBar = ({ upDateTaskItems }) => {
             </View>
             <View   style={styles.buttons}>
                 <TouchableOpacity onPress={() => upDateTaskItems('all')}>
-                {/* <TouchableOpacity > */}
                     <Text style={styles.navText}>All</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity onPress={active}> */}
                 <TouchableOpacity onPress={() => upDateTaskItems('active')}>
 
-                {/* <TouchableOpacity > */}
                     <Text style={styles.navText}>Active</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity onPress={completed}> */}
                 <TouchableOpacity onPress={() => upDateTaskItems('completed')}>
 
-                {/* <TouchableOpacity > */}
                     <Text style={styles.navText}>Completed</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => alert('Clear Completed')}>
-            {/* <TouchableOpacity onPress={() => clearCompletedFn()}> */}
+            <TouchableOpacity onPress={() =>clearCompletedTasks()}>
                 <Text style={styles.navText}>Clear Completed</Text>
             </TouchableOpacity>
         </View>
     );
-
 };
 
 const styles = StyleSheet.create({
