@@ -38,32 +38,17 @@ export default function App() {
     setTaskItems((prevTasks) => [...prevTasks, newTask]);
     setTaskItemsCpy((prevTasks) => [...prevTasks, newTask]);
   };
-  
-  // let keyState = {
-    //   value: "all",
-    // };
     
-    const upDateTaskItems = (key) => {
-      // setTaskItemsCpy(taskItems);
-      setTaskItems(taskItemsCpy);
-      console.log('key =', key);
-      console.log('taksItemsCpy =', taskItemsCpy);
-      console.log('takItems =', taskItems);
-
-      if (key === 'all') {
-        // console.log('takiTems =', taskItems);
-        return (setTaskItems(taskItemsCpy));
-      }
-      if (key === 'active') {
-        // console.log('takiTems =', taskItems)
-        // setTaskItems(taskItemsCpy);
-        return (setTaskItems(taskItems.filter((task) => !task.completed)));
-      }
-      if (key === 'completed') {
-        // console.log('takiTems =', taskItems);
-        // setTaskItemsCpy(taskItems);
-        return  (setTaskItems(taskItems.filter((task) => task.completed)));
-      }
+  const upDateTaskItems = (key) => {
+    if (key === 'all') {
+      return (setTaskItems(taskItemsCpy));
+    }
+    if (key === 'active') {
+      return (setTaskItems(taskItemsCpy.filter((task) => !task.completed)));
+    }
+    if (key === 'completed') {
+      return  (setTaskItems(taskItemsCpy.filter((task) => task.completed)));
+    }
   };
 
   const toggleTask = (id) => {
