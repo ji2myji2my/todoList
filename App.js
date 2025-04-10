@@ -25,6 +25,7 @@ import DisplayNavBar from './components/DisplayNavBar';
 export default function App() {
   const [taskItems, setTaskItems] = useState([]);
   const [taskItemsCpy, setTaskItemsCpy] = useState([]);
+  const [numberOfTasks, setNumberOfTasks] = useState(0);
   
   const handleAddTask = (taskText) => {
     // Créer une tâche avec un ID unique, 
@@ -37,6 +38,7 @@ export default function App() {
     // Mettre à jour la liste
     setTaskItems((prevTasks) => [...prevTasks, newTask]);
     setTaskItemsCpy((prevTasks) => [...prevTasks, newTask]);
+    setNumberOfTasks((prevCount) => prevCount + 1);
   };
     
   const upDateTaskItems = (key) => {
@@ -67,11 +69,13 @@ export default function App() {
   const deleteTask = (id) => {
     setTaskItems((prevTasks) => prevTasks.filter((t) => t.id !== id));
     setTaskItemsCpy((prevTasks) => prevTasks.filter((t) => t.id !== id));
+    setNumberOfTasks((prevCount) => prevCount - 1);
   };
 
   const clearCompletedTasks = () => {
     setTaskItems((prevTasks) => prevTasks.filter((task) => !task.completed));
     setTaskItemsCpy((prevTasks) => prevTasks.filter((task) => !task.completed));
+    setNumberOfTasks((prevCount) => prevCount - taskItems.filter((task) => task.completed).length); 
   }
 
   // Si on est sur web => Wrap DndProvider
@@ -92,6 +96,7 @@ export default function App() {
             <DisplayNavBar style={styles.DisplayNavBarStyle} 
               upDateTaskItems={upDateTaskItems}
               clearCompletedTasks={clearCompletedTasks}
+              numberOfTasks={numberOfTasks}
             />
           </View>
         </GestureHandlerRootView>

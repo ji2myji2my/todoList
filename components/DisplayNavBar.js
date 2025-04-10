@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const DisplayNavBar = ({ upDateTaskItems, clearCompletedTasks }) => {
+const DisplayNavBar = ({ upDateTaskItems, clearCompletedTasks, numberOfTasks }) => {
     return (
         <View style={styles.navBar}>
             <View style={styles.itemsLeft}>
-                <Text style={styles.navText}>items left</Text>
+                <Text style={styles.navText}>{numberOfTasks} items left</Text>
             </View>
             <View   style={styles.buttons}>
                 <TouchableOpacity onPress={() => upDateTaskItems('all')}>
