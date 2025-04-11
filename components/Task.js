@@ -11,7 +11,10 @@ const Task = ({ id, text, completed, onToggle, onDelete }) => {
           <View style={styles.circular} />
         </TouchableOpacity>
         
-        <Text style={[styles.itemText, completed && styles.itemTextCompleted]}>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail" 
+          style={[styles.itemText, completed && styles.itemTextCompleted]}>
           {text}
         </Text>
 
@@ -28,13 +31,16 @@ const Task = ({ id, text, completed, onToggle, onDelete }) => {
 const styles = StyleSheet.create({
   item: {
     height: 80,
-    backgroundColor: "#fff",
+    width: "100%",
+    // backgroundColor: "#fff",
     padding: 20,
-    borderRadius: 10,
+    // borderRadius: 10,
+    borderBottomColor: "#808080",
+    borderBottomWidth: 2,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 20,
+    // marginBottom: 20,
     zIndex: 2,
   },
   itemLeft: {
@@ -51,12 +57,17 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   itemText: {
-    maxWidth: "80%",
+    color: "	#808080",
+    maxWidth: 500,
+    fontSize: 20,
+    // fontWeight: "bold",
+    padding: 10,
+    flexShrink: 1,
   },
   // Style qu'on applique conditionnellement quand la tâche est complétée
   itemTextCompleted: {
     textDecorationLine: "line-through",
-    opacity: 0.6, // Optionnel, pour un effet visuel plus marqué
+    opacity: 0.3,
   },
 
   circular: {

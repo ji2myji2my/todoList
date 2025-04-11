@@ -82,7 +82,7 @@ export default function App() {
   if (Platform.OS === 'web') {
     return (
       <DndProvider backend={HTML5Backend}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#E8EAED' }}>
             <LightDarkBar />
             <View style={styles.container}>
             <WriteTask  onAddTask={handleAddTask} style={styles.WriteTaskStyle}/>

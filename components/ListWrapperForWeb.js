@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     // // Sur web, un conteneur
     width: '100%',
     height: '100%',
-    backgroundColor: '#2e4054',
+    backgroundColor: '#fff',
     // marginHorizontal: 'auto',
     padding: 10,
     top: 30,

@@ -31,17 +31,19 @@ const styles = StyleSheet.create({
     navBar: {
         flex: 1,
         width: '100%',
-        height: '5vh',
+        height: '4vh',
         flexDirection: "row",
         justifyContent: "space-around",
         alignContent: "flex-start",
         alignItems: "center",
         padding: 10,
-        backgroundColor: '#2e4054',
+        // backgroundColor: '#2e4054',
         marginHorizontal: 'auto',
-        borderRadius: 10,
+        borderRadiusBottom: 10,
         bottom: 0,
         position: 'absolute',
+        borderTopColor: "#808080",
+        borderTopWidth: 2,
     },
     buttons: {
         flexDirection: "row",
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     },
     navText: {
         fontSize: 18,
-        color: "#FFF",
+        color: "#808080",
         top: 15,
     },
 });
