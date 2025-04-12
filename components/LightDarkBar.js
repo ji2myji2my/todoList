@@ -17,6 +17,9 @@ const LightDarkBar = () => {
 
       imageContainer: {
         width: "100%",
+        height: "40vh",
+        zIndex: -1,
+        position: 'absolute',
         // minHeighth: isMobile ? "50vh" : "40vh",
       },
     
@@ -24,9 +27,13 @@ const LightDarkBar = () => {
         marginTop: 30,
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    
+        justifyContent: 'center',
+        // alignItems: 'stretch',
+        // alignContent: 'space-between',
+        zIndex: 1,
+        // position: 'relative',
+        marginInline: 'auto',
+        maxWidth: '80vw',
       },
     
       modeHandlebtn: {
@@ -42,6 +49,7 @@ const LightDarkBar = () => {
       sectionTitle: {
         fontSize: 24,
         fontWeight: 'bold',
+        color: "#fff",
       },
     
     });

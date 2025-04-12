@@ -125,6 +125,7 @@ function SortableItem({ task, toggleTask, deleteTask }) {
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     // // Sur web, un conteneur
@@ -135,7 +136,8 @@ const styles = StyleSheet.create({
     padding: 10,
     top: 30,
     borderRadius: 10,
-    paddingBottom: 60,
+    paddingBottom: 60, 
+    boxShadow: '0 16px 16px rgba(0, 0, 0, 0.4)',
   },
   itemContainer: {
     marginBottom: 8,
