@@ -40,15 +40,6 @@ const LightDarkBar = () => {
         height: 70,
         justifyContent: 'center',
         alignItems: 'center',
-        // zIndex: 1,
-        // borderColor: "red",
-        // borderStyle: "solid",
-        // borderWidth: 5,
-      },
-    
-      imageTheme: {
-        width: "100%",
-        height: "100%",
       },
     
       sectionTitle: {
