@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from "react-native";
+
+//Images import 
+import CrossIcon from "../assets/images/icon-cross.svg";
+import CheckIcon from "../assets/images/icon-check.svg";
 
 const Task = ({ id, text, completed, onToggle, onDelete }) => {
   return (
@@ -8,7 +12,9 @@ const Task = ({ id, text, completed, onToggle, onDelete }) => {
       <View style={styles.itemLeft}>
 
         <TouchableOpacity onPress={() => onToggle(id)}>
-          <View style={styles.circular} />
+          <View style={[styles.circular, completed && styles.circularCompleted]}>
+            {completed && <CheckIcon width={34} height={34} fill="#fff" />}
+          </View>
         </TouchableOpacity>
         
         <Text
@@ -20,10 +26,9 @@ const Task = ({ id, text, completed, onToggle, onDelete }) => {
 
       </View>
       
-      <TouchableOpacity
-        style={styles.square}
-        onPress={() => onDelete(id)}
-      />
+      <TouchableOpacity style={styles.crossBtn} onPress={() => onDelete(id)}>
+        <CrossIcon width={34} height={34} fill="#000" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -32,15 +37,12 @@ const styles = StyleSheet.create({
   item: {
     height: 80,
     width: "100%",
-    // backgroundColor: "#fff",
     padding: 20,
-    // borderRadius: 10,
     borderBottomColor: "#808080",
     borderBottomWidth: 2,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    // marginBottom: 20,
     zIndex: 2,
   },
   itemLeft: {
@@ -60,7 +62,6 @@ const styles = StyleSheet.create({
     color: "	#808080",
     maxWidth: 500,
     fontSize: 20,
-    // fontWeight: "bold",
     padding: 10,
     flexShrink: 1,
   },
@@ -71,12 +72,35 @@ const styles = StyleSheet.create({
   },
 
   circular: {
-    width: 24,
-    height: 24,
-    borderColor: "#55BCF6",
+    width: 34,
+    height: 34,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    backgroundColor: "#fff",
     borderWidth: 2,
-    borderRadius: 12,
-    marginEnd: 10,
+    borderColor: "rgb(148, 15, 182)",
+    marginRight: 15,
+  },
+
+  // Style qu'on applique conditionnellement quand la tâche est complétée
+  circularCompleted: {
+    backgroundColor: "rgb(148, 15, 182)",
+    borderColor: "rgb(148, 15, 182)",
+  },
+
+  crossBtn: { 
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "red",
+    borderStyle: "solid",
+    borderWidth: 2,
+  },
+  
+  CrossIcon: {
+    width: 34,
+    height: 34,
+
   },
 });
 

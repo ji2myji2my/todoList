@@ -18,6 +18,12 @@ const WriteTask = ({ onAddTask }) => {
           behavior={Platform.OS === "ios" ? "padding" : "height" }
           style={styles.keyboardAvoidingView}
         >
+          
+          <TouchableOpacity onPress={() => handlePress()}>
+            <View style={styles.addWrapper}>
+              <Text style={styles.addText}>+</Text>
+            </View>
+          </TouchableOpacity>
 
           <TextInput style={styles.input} 
             placeholder={'Create a new todo...'} 
@@ -25,12 +31,6 @@ const WriteTask = ({ onAddTask }) => {
             onChangeText={text => setText(text)}
             onSubmitEditing={handlePress}
           />
-
-          <TouchableOpacity onPress={() => handlePress()}>
-            <View style={styles.addWrapper}>
-              <Text style={styles.addText}>+</Text>
-            </View>
-          </TouchableOpacity>
 
         </KeyboardAvoidingView>
     )
